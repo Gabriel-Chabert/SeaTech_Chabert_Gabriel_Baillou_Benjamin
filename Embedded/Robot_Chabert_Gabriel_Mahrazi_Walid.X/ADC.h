@@ -8,16 +8,12 @@
 #ifndef ADC_H
 #define	ADC_H
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
 
-
-
-
-#ifdef	__cplusplus
-}
-#endif
+void InitADC1();
+void ADC1StartConversionSequence();
+unsigned int * ADCGetResult();
+unsigned char ADCIsConversionFinished();
+void ADCClearConversionFinishedFlag();
 
 #endif	/* ADC_H */
 
