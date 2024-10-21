@@ -6,9 +6,8 @@
 #include "main.h"
 #include "ChipConfig.h"
 
-unsigned long timestamp;
+unsigned long timestamp = 1000000;
 //Initialisation d?un timer 16 bits
-
 
 void InitTimer1(void) {
     //Timer1 pour horodater les mesures (1ms)
@@ -23,7 +22,7 @@ void InitTimer1(void) {
     IFS0bits.T1IF = 0; // Clear Timer Interrupt Flag
     IEC0bits.T1IE = 1; // Enable Timer interrupt
     T1CONbits.TON = 1; // Enable Timer
-    SetFreqTimer1(2.5);// Régler automatiquement PR1 et le prescaler TCKPS
+    SetFreqTimer1(50); // Régler automatiquement PR1 et le prescaler TCKPS
 }
 //Interruption du timer 1
 
@@ -31,7 +30,7 @@ void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
     IFS0bits.T1IF = 0;
     PWMUpdateSpeed();
     ADC1StartConversionSequence();
- //   LED_BLEUE_2 = !LED_BLEUE_2;
+    //   LED_BLEUE_2 = !LED_BLEUE_2;
 }
 //Initialisation d?un timer 32 bits
 
@@ -60,16 +59,16 @@ unsigned char toggle = 0;
 
 void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void) {
     IFS0bits.T3IF = 0; // Clear Timer3 Interrupt Flag
-/*    if (toggle == 0) {
-        PWMSetSpeedConsigne(20, MOTEUR_DROIT);
-        PWMSetSpeedConsigne(20, MOTEUR_GAUCHE);
-        toggle = 1;
-    } else {
-        PWMSetSpeedConsigne(-20, MOTEUR_DROIT);
-        PWMSetSpeedConsigne(-20, MOTEUR_GAUCHE);
-        toggle = 0;
-    }
-*/
+    /*    if (toggle == 0) {
+            PWMSetSpeedConsigne(20, MOTEUR_DROIT);
+            PWMSetSpeedConsigne(20, MOTEUR_GAUCHE);
+            toggle = 1;
+        } else {
+            PWMSetSpeedConsigne(-20, MOTEUR_DROIT);
+            PWMSetSpeedConsigne(-20, MOTEUR_GAUCHE);
+            toggle = 0;
+        }
+     */
 }
 
 void SetFreqTimer1(float freq) {
@@ -119,12 +118,14 @@ void InitTimer4(void) {
     IFS1bits.T4IF = 0; // Clear Timer Interrupt Flag
     IEC1bits.T4IE = 1; // Enable Timer interrupt
     T4CONbits.TON = 1; // Enable Timer
-    SetFreqTimer4(1000);// Régler automatiquement PR1 et le prescaler TCKPS
+    SetFreqTimer4(1000); // Régler automatiquement PR1 et le prescaler TCKPS
 }
 //Interruption du timer 4
 
 void __attribute__((interrupt, no_auto_psv)) _T4Interrupt(void) {
     IFS1bits.T4IF = 0;
-    timestamp+=1;
+    if (BOUTON_1 == 1)
+        timestamp=0;
     OperatingSystemLoop();
+    timestamp += 1;
 }
