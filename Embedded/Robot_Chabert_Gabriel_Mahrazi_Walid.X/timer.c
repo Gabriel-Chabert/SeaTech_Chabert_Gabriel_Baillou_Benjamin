@@ -22,7 +22,7 @@ void InitTimer1(void) {
     IFS0bits.T1IF = 0; // Clear Timer Interrupt Flag
     IEC0bits.T1IE = 1; // Enable Timer interrupt
     T1CONbits.TON = 1; // Enable Timer
-    SetFreqTimer1(50); // Régler automatiquement PR1 et le prescaler TCKPS
+    SetFreqTimer1(250); // Régler automatiquement PR1 et le prescaler TCKPS
 }
 //Interruption du timer 1
 
