@@ -38,14 +38,14 @@ void OperatingSystemLoop(void) {
                 break;
             case STATE_TOURNE_GAUCHE:
                 PWMSetSpeedConsigne(robotState.vitesse, MOTEUR_DROIT);
-                PWMSetSpeedConsigne(robotState.vitesse/2, MOTEUR_GAUCHE);
+                PWMSetSpeedConsigne(robotState.vitesse/2.2, MOTEUR_GAUCHE);
                 stateRobot = STATE_TOURNE_GAUCHE_EN_COURS;
                 break;
             case STATE_TOURNE_GAUCHE_EN_COURS:
                 SetNextRobotStateInAutomaticMode();
                 break;
             case STATE_TOURNE_DROITE:
-                PWMSetSpeedConsigne(robotState.vitesse/2, MOTEUR_DROIT);
+                PWMSetSpeedConsigne(robotState.vitesse/2.2, MOTEUR_DROIT);
                 PWMSetSpeedConsigne(robotState.vitesse, MOTEUR_GAUCHE);
                 stateRobot = STATE_TOURNE_DROITE_EN_COURS;
                 break;
@@ -53,16 +53,16 @@ void OperatingSystemLoop(void) {
                 SetNextRobotStateInAutomaticMode();
                 break;
             case STATE_TOURNE_SUR_PLACE_GAUCHE:
-                PWMSetSpeedConsigne(robotState.vitesse, MOTEUR_DROIT);
-                PWMSetSpeedConsigne(-robotState.vitesse, MOTEUR_GAUCHE);
+                PWMSetSpeedConsigne(robotState.vitesse/2, MOTEUR_DROIT);
+                PWMSetSpeedConsigne(-robotState.vitesse/2, MOTEUR_GAUCHE);
                 stateRobot = STATE_TOURNE_SUR_PLACE_GAUCHE_EN_COURS;
                 break;
             case STATE_TOURNE_SUR_PLACE_GAUCHE_EN_COURS:
                 SetNextRobotStateInAutomaticMode();
                 break;
             case STATE_TOURNE_SUR_PLACE_DROITE:
-                PWMSetSpeedConsigne(-robotState.vitesse, MOTEUR_DROIT);
-                PWMSetSpeedConsigne(robotState.vitesse, MOTEUR_GAUCHE);
+                PWMSetSpeedConsigne(-robotState.vitesse/2, MOTEUR_DROIT);
+                PWMSetSpeedConsigne(robotState.vitesse/2, MOTEUR_GAUCHE);
                 stateRobot = STATE_TOURNE_SUR_PLACE_DROITE_EN_COURS;
                 break;
             case STATE_TOURNE_SUR_PLACE_DROITE_EN_COURS:
@@ -78,14 +78,14 @@ void OperatingSystemLoop(void) {
                 break;
             case STATE_TOURNE_LEGEREMENT_GAUCHE:
                 PWMSetSpeedConsigne(robotState.vitesse, MOTEUR_DROIT);
-                PWMSetSpeedConsigne(robotState.vitesse /1.5, MOTEUR_GAUCHE);
+                PWMSetSpeedConsigne(robotState.vitesse /1.8, MOTEUR_GAUCHE);
                 stateRobot = STATE_TOURNE_LEGEREMENT_GAUCHE_EN_COURS;
                 break;
             case STATE_TOURNE_LEGEREMENT_GAUCHE_EN_COURS:
                 SetNextRobotStateInAutomaticMode();
                 break;
             case STATE_TOURNE_LEGEREMENT_DROITE:
-                PWMSetSpeedConsigne(robotState.vitesse /1.5, MOTEUR_DROIT);
+                PWMSetSpeedConsigne(robotState.vitesse /1.8, MOTEUR_DROIT);
                 PWMSetSpeedConsigne(robotState.vitesse, MOTEUR_GAUCHE);
                 stateRobot = STATE_TOURNE_LEGEREMENT_DROITE_EN_COURS;
                 break;
@@ -94,14 +94,14 @@ void OperatingSystemLoop(void) {
                 break;
             case STATE_TOURNE_MOYENNEMENT_GAUCHE:
                 PWMSetSpeedConsigne(robotState.vitesse , MOTEUR_DROIT);
-                PWMSetSpeedConsigne(robotState.vitesse/1.8, MOTEUR_GAUCHE);
+                PWMSetSpeedConsigne(robotState.vitesse/2, MOTEUR_GAUCHE);
                 stateRobot = STATE_TOURNE_MOYENNEMENT_GAUCHE_EN_COURS;
                 break;
             case STATE_TOURNE_MOYENNEMENT_GAUCHE_EN_COURS:
                 SetNextRobotStateInAutomaticMode();
                 break;
             case STATE_TOURNE_MOYENNEMENT_DROITE:
-                PWMSetSpeedConsigne(robotState.vitesse/1.8, MOTEUR_DROIT);
+                PWMSetSpeedConsigne(robotState.vitesse/2, MOTEUR_DROIT);
                 PWMSetSpeedConsigne(robotState.vitesse, MOTEUR_GAUCHE);
                 stateRobot = STATE_TOURNE_MOYENNEMENT_DROITE_EN_COURS;
                 break;
@@ -109,8 +109,8 @@ void OperatingSystemLoop(void) {
                 SetNextRobotStateInAutomaticMode();
                 break;
             case STATE_DEMI_TOUR:
-                PWMSetSpeedConsigne(-robotState.vitesse, MOTEUR_DROIT);
-                PWMSetSpeedConsigne(robotState.vitesse, MOTEUR_GAUCHE);
+                PWMSetSpeedConsigne(-robotState.vitesse/2.5, MOTEUR_DROIT);
+                PWMSetSpeedConsigne(robotState.vitesse/2.5, MOTEUR_GAUCHE);
                 stateRobot = STATE_DEMI_TOUR_EN_COURS;
                 break;
             case STATE_DEMI_TOUR_EN_COURS:
@@ -244,18 +244,18 @@ void SetNextRobotStateInAutomaticMode() {
             nextStateRobot = STATE_TOURNE_MOYENNEMENT_GAUCHE;
             break;
 
-        case 0b01111: // state demi tour
-            nextStateRobot = STATE_TOURNE_GAUCHE;
+        case 0b01111:
+            nextStateRobot = STATE_DEMI_TOUR;
         case 0b10111: // state demi tour
             nextStateRobot = STATE_DEMI_TOUR;
         case 0b11010: // state demi tour
-            nextStateRobot = STATE_TOURNE_DROITE;
+            nextStateRobot = STATE_DEMI_TOUR;
         case 0b11011: // state demi tour
             nextStateRobot = STATE_DEMI_TOUR;
         case 0b11101: // state demi tour
             nextStateRobot = STATE_DEMI_TOUR;
         case 0b11110: // state demi tour
-            nextStateRobot = STATE_TOURNE_DROITE;
+            nextStateRobot = STATE_DEMI_TOUR;
         case 0b11111: // state demi tour
             nextStateRobot = STATE_DEMI_TOUR;
 
@@ -303,7 +303,7 @@ int main(void) {
     InitPWM();
 
     robotState.acceleration = 5;
-    robotState.vitesse = 20;
+    robotState.vitesse = 30;
 
     /***********************************************************************************************/
     // ADC
@@ -341,7 +341,7 @@ int main(void) {
             } else {
                 LED_ROUGE_1 = 0;
             }
-            if (robotState.distanceTelemetreCentre < 40) {
+            if (robotState.distanceTelemetreCentre < 38) {
                 LED_ORANGE_1 = 1;
                 sensorState |= 0b00100;
             } else {
