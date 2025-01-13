@@ -36,8 +36,6 @@ void InitIO()
     _TRISA10 = 0; // LED Rouge 2
     
     
-
-    
     //****** Moteurs ************************
 
     // Configuration des entrées
@@ -47,7 +45,9 @@ void InitIO()
     // Gestion des pin remappables
     /****************************************************************************************************/
     UnlockIO(); // On unlock les registres d'entrées/sorties, ainsi que les registres des PPS
-    
+    //****** Laison série  ************************
+    _U1RXR = 78; //Remappe la RP69 sur l?entre Rx1
+    _RP79R = 0b00001; //Remappe la sortie Tx1 vers RP79
     //Assignation des remappable pins
         
     LockIO(); // On lock les registres d'entrées/sorties, ainsi que les registres des PPS
