@@ -39,6 +39,7 @@
 #define OBSTACLE_EN_FACE 3
 
 void OperatingSystemLoop();
+void SetNextRobotStateInAutomaticMode() ;
 
 
 #endif	/* MAIN_H */

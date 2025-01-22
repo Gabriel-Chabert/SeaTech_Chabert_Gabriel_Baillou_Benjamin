@@ -9,6 +9,8 @@
 #include "ADC.h"
 #include "main.h"
 #include "UART.h"
+#include "CB_TX1.h"
+#include <libpic30.h>
 
 unsigned char stateRobot;
 unsigned char sensorState = 0;
@@ -366,5 +368,9 @@ int main(void) {
                 LED_VERTE_1 = 0;
             }
         }
+        //SendMessageDirect((unsigned char*) "Bonjour", 7);
+        //__delay32(40000000);
+        SendMessage((unsigned char*) "Bonjour buffer", 14);
+        __delay32(4000000);
     }// fin main
 }
