@@ -10,6 +10,7 @@
 #include "main.h"
 #include "UART.h"
 #include "CB_TX1.h"
+#include "CB_RX1.h"
 #include <libpic30.h>
 
 unsigned char stateRobot;
@@ -41,14 +42,14 @@ void OperatingSystemLoop(void) {
                 break;
             case STATE_TOURNE_GAUCHE:
                 PWMSetSpeedConsigne(robotState.vitesse, MOTEUR_DROIT);
-                PWMSetSpeedConsigne(robotState.vitesse/2.2, MOTEUR_GAUCHE);
+                PWMSetSpeedConsigne(robotState.vitesse / 2.2, MOTEUR_GAUCHE);
                 stateRobot = STATE_TOURNE_GAUCHE_EN_COURS;
                 break;
             case STATE_TOURNE_GAUCHE_EN_COURS:
                 SetNextRobotStateInAutomaticMode();
                 break;
             case STATE_TOURNE_DROITE:
-                PWMSetSpeedConsigne(robotState.vitesse/2.2, MOTEUR_DROIT);
+                PWMSetSpeedConsigne(robotState.vitesse / 2.2, MOTEUR_DROIT);
                 PWMSetSpeedConsigne(robotState.vitesse, MOTEUR_GAUCHE);
                 stateRobot = STATE_TOURNE_DROITE_EN_COURS;
                 break;
@@ -56,16 +57,16 @@ void OperatingSystemLoop(void) {
                 SetNextRobotStateInAutomaticMode();
                 break;
             case STATE_TOURNE_SUR_PLACE_GAUCHE:
-                PWMSetSpeedConsigne(robotState.vitesse/2, MOTEUR_DROIT);
-                PWMSetSpeedConsigne(-robotState.vitesse/2, MOTEUR_GAUCHE);
+                PWMSetSpeedConsigne(robotState.vitesse / 2, MOTEUR_DROIT);
+                PWMSetSpeedConsigne(-robotState.vitesse / 2, MOTEUR_GAUCHE);
                 stateRobot = STATE_TOURNE_SUR_PLACE_GAUCHE_EN_COURS;
                 break;
             case STATE_TOURNE_SUR_PLACE_GAUCHE_EN_COURS:
                 SetNextRobotStateInAutomaticMode();
                 break;
             case STATE_TOURNE_SUR_PLACE_DROITE:
-                PWMSetSpeedConsigne(-robotState.vitesse/2, MOTEUR_DROIT);
-                PWMSetSpeedConsigne(robotState.vitesse/2, MOTEUR_GAUCHE);
+                PWMSetSpeedConsigne(-robotState.vitesse / 2, MOTEUR_DROIT);
+                PWMSetSpeedConsigne(robotState.vitesse / 2, MOTEUR_GAUCHE);
                 stateRobot = STATE_TOURNE_SUR_PLACE_DROITE_EN_COURS;
                 break;
             case STATE_TOURNE_SUR_PLACE_DROITE_EN_COURS:
@@ -81,14 +82,14 @@ void OperatingSystemLoop(void) {
                 break;
             case STATE_TOURNE_LEGEREMENT_GAUCHE:
                 PWMSetSpeedConsigne(robotState.vitesse, MOTEUR_DROIT);
-                PWMSetSpeedConsigne(robotState.vitesse /1.8, MOTEUR_GAUCHE);
+                PWMSetSpeedConsigne(robotState.vitesse / 1.8, MOTEUR_GAUCHE);
                 stateRobot = STATE_TOURNE_LEGEREMENT_GAUCHE_EN_COURS;
                 break;
             case STATE_TOURNE_LEGEREMENT_GAUCHE_EN_COURS:
                 SetNextRobotStateInAutomaticMode();
                 break;
             case STATE_TOURNE_LEGEREMENT_DROITE:
-                PWMSetSpeedConsigne(robotState.vitesse /1.8, MOTEUR_DROIT);
+                PWMSetSpeedConsigne(robotState.vitesse / 1.8, MOTEUR_DROIT);
                 PWMSetSpeedConsigne(robotState.vitesse, MOTEUR_GAUCHE);
                 stateRobot = STATE_TOURNE_LEGEREMENT_DROITE_EN_COURS;
                 break;
@@ -96,15 +97,15 @@ void OperatingSystemLoop(void) {
                 SetNextRobotStateInAutomaticMode();
                 break;
             case STATE_TOURNE_MOYENNEMENT_GAUCHE:
-                PWMSetSpeedConsigne(robotState.vitesse , MOTEUR_DROIT);
-                PWMSetSpeedConsigne(robotState.vitesse/2, MOTEUR_GAUCHE);
+                PWMSetSpeedConsigne(robotState.vitesse, MOTEUR_DROIT);
+                PWMSetSpeedConsigne(robotState.vitesse / 2, MOTEUR_GAUCHE);
                 stateRobot = STATE_TOURNE_MOYENNEMENT_GAUCHE_EN_COURS;
                 break;
             case STATE_TOURNE_MOYENNEMENT_GAUCHE_EN_COURS:
                 SetNextRobotStateInAutomaticMode();
                 break;
             case STATE_TOURNE_MOYENNEMENT_DROITE:
-                PWMSetSpeedConsigne(robotState.vitesse/2, MOTEUR_DROIT);
+                PWMSetSpeedConsigne(robotState.vitesse / 2, MOTEUR_DROIT);
                 PWMSetSpeedConsigne(robotState.vitesse, MOTEUR_GAUCHE);
                 stateRobot = STATE_TOURNE_MOYENNEMENT_DROITE_EN_COURS;
                 break;
@@ -112,8 +113,8 @@ void OperatingSystemLoop(void) {
                 SetNextRobotStateInAutomaticMode();
                 break;
             case STATE_DEMI_TOUR:
-                PWMSetSpeedConsigne(-robotState.vitesse/2.5, MOTEUR_DROIT);
-                PWMSetSpeedConsigne(robotState.vitesse/2.5, MOTEUR_GAUCHE);
+                PWMSetSpeedConsigne(-robotState.vitesse / 2.5, MOTEUR_DROIT);
+                PWMSetSpeedConsigne(robotState.vitesse / 2.5, MOTEUR_GAUCHE);
                 stateRobot = STATE_DEMI_TOUR_EN_COURS;
                 break;
             case STATE_DEMI_TOUR_EN_COURS:
@@ -175,61 +176,61 @@ void SetNextRobotStateInAutomaticMode() {
             nextStateRobot = STATE_TOURNE_LEGEREMENT_GAUCHE;
             break;
 
-        case 0b00010: 
+        case 0b00010:
             nextStateRobot = STATE_TOURNE_MOYENNEMENT_GAUCHE;
             break;
         case 0b00011:
             nextStateRobot = STATE_TOURNE_MOYENNEMENT_GAUCHE;
             break;
 
-        case 0b00100: 
+        case 0b00100:
             nextStateRobot = STATE_TOURNE_SUR_PLACE_GAUCHE;
             break;
-        case 0b00101: 
+        case 0b00101:
             nextStateRobot = STATE_TOURNE_SUR_PLACE_GAUCHE;
             break;
-        case 0b00110: 
+        case 0b00110:
             nextStateRobot = STATE_TOURNE_SUR_PLACE_GAUCHE;
             break;
-        case 0b00111: 
+        case 0b00111:
             nextStateRobot = STATE_TOURNE_SUR_PLACE_GAUCHE;
             break;
-        case 0b01100: 
+        case 0b01100:
             nextStateRobot = STATE_TOURNE_SUR_PLACE_DROITE;
             break;
         case 0b01101:
             nextStateRobot = STATE_TOURNE_SUR_PLACE_GAUCHE;
             break;
-        case 0b01110: 
+        case 0b01110:
             nextStateRobot = STATE_TOURNE_SUR_PLACE_GAUCHE;
             break;
-        case 0b10100: 
+        case 0b10100:
             nextStateRobot = STATE_TOURNE_SUR_PLACE_DROITE;
             break;
         case 0b10101:
             nextStateRobot = STATE_DEMI_TOUR;
             break;
-        case 0b10110: 
+        case 0b10110:
             nextStateRobot = STATE_TOURNE_SUR_PLACE_DROITE;
             break;
         case 0b11100:
             nextStateRobot = STATE_TOURNE_SUR_PLACE_DROITE;
             break;
-        case 0b01010: 
+        case 0b01010:
             nextStateRobot = STATE_DEMI_TOUR;
             break;
-        case 0b01011: 
+        case 0b01011:
             nextStateRobot = STATE_TOURNE_SUR_PLACE_GAUCHE;
             break;
 
-        case 0b01000: 
+        case 0b01000:
             nextStateRobot = STATE_TOURNE_MOYENNEMENT_DROITE;
             break;
-        case 0b11000: 
+        case 0b11000:
             nextStateRobot = STATE_TOURNE_MOYENNEMENT_DROITE;
             break;
 
-        case 0b01001: 
+        case 0b01001:
             nextStateRobot = STATE_TOURNE_MOYENNEMENT_DROITE;
             break;
         case 0b11001:
@@ -312,7 +313,7 @@ int main(void) {
     // ADC
     /***********************************************************************************************/
     InitADC1();
-    
+
     /***********************************************************************************************/
     // Liaison série embarqué
     /***********************************************************************************************/
@@ -370,7 +371,13 @@ int main(void) {
         }
         //SendMessageDirect((unsigned char*) "Bonjour", 7);
         //__delay32(40000000);
-        SendMessage((unsigned char*) "Bonjour buffer", 14);
-        __delay32(4000000);
+        //        SendMessage((unsigned char*) "Bonjour buffer", 14);
+        //        __delay32(4000000);
+        int i;
+        for (i = 0; i < CB_RX1_GetDataSize(); i++) {
+            unsigned char c = CB_RX1_Get();
+            SendMessage(&c, 1);
+        }
+        //__delay32(10000);
     }// fin main
 }
